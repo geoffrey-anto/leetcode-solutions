@@ -1,20 +1,19 @@
 class Solution {
 public:
-    vector<vector<int>> mem;
-    void perm(vector<int> x, int i, int l){
-        if(x.size()==i){
-            mem.push_back(x);
+    void f(vector<int> &n, int idx, vector<vector<int>> &ans){
+        if(idx==n.size()){
+            ans.push_back(n);
             return;
         }
-        for(int j=i;j<=l;j++){
-            swap(x[i],x[j]);
-            perm(x,i+1,l);
-            swap(x[j],x[i]);
+        for(int i=idx;i<n.size();i++){
+            swap(n[idx],n[i]);
+            f(n,idx+1,ans);
+            swap(n[idx],n[i]);
         }
     }
-    
     vector<vector<int>> permute(vector<int>& nums) {
-        perm(nums, 0, nums.size()-1);
-        return mem;
+        vector<vector<int>> ans;
+        f(nums ,0 ,ans);
+        return ans;
     }
 };
