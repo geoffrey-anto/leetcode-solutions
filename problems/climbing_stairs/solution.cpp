@@ -1,19 +1,17 @@
 class Solution {
 public:
-    int dp[50];
     
-    int helper(int n){
-        if(n<=1){
-            return 1;
-        }
-        if(dp[n]!=-1){
-            return dp[n];
-        }
-        return dp[n]=helper(n-1)+helper(n-2);
+    int dp[100];
+    
+    int f(int i){
+        if(i==0) return dp[i] = 1;
+        if(i==1) return dp[i] = 1;
+        if(dp[i]!=-1) return dp[i];
+        return dp[i] = f(i-1) + f(i-2);
     }
     
     int climbStairs(int n) {
-        memset(&dp,-1,sizeof(dp));
-        return helper(n);
+        memset(dp, -1, sizeof(dp));
+        return f(n);
     }
 };
