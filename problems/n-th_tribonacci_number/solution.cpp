@@ -1,18 +1,15 @@
 class Solution {
 public:
-    int dp[40];
-    
+    int dp[1000];
     int helper(int n){
+        if(n==2) return 1;
         if(n<=1){
-            return n; 
-        }
-        if(n==2){
-            return 1;
+            return n;
         }
         if(dp[n]!=-1){
             return dp[n];
         }
-        return dp[n]=helper(n-1)+helper(n-2)+helper(n-3);
+        return dp[n]=helper(n-1)+helper(n-2)+helper(n-3); 
     }
     
     int tribonacci(int n) {
