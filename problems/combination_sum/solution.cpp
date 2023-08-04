@@ -1,26 +1,38 @@
 class Solution {
 public:
-    
-    void f(int idx, vector<int> &c, int target, vector<int> &stk, vector<vector<int>> &ans){
-        if(idx == c.size()){
-            if(target==0){
-                ans.push_back(stk);
-            }
-            return;
+    template <typename T>
+    void print(T arr)
+    {
+        for (auto i : arr)
+        {
+            cout << i << ' ';
         }
-        
-        if(target>=c[idx]){
-            stk.push_back(c[idx]);
-            f(idx, c, target-c[idx], stk, ans);
-            stk.pop_back();
-        }
-        f(idx+1, c, target, stk, ans);
+        cout << endl;
     }
-    
+    void f(vector<int> &arr, int idx, int sum, int n, vector<int> &ds, vector<vector<int>> &ans){
+        if(idx == arr.size()) {
+            if(sum == 0) {
+                ans.push_back(ds);
+            }
+            return ;
+        }
+
+        // PICK
+        if(arr[idx] <=sum) {
+            ds.push_back(arr[idx]);
+            f(arr, idx, sum - arr[idx], n, ds, ans);
+            ds.pop_back();
+        }
+
+        // NOT PICK
+        f(arr, idx+1, sum, n, ds, ans);
+
+        return ;
+    }
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> ds;
         vector<vector<int>> ans;
-        vector<int> stk;
-        f(0,candidates,target,stk,ans);
+        f(candidates, 0, target, candidates.size(), ds, ans);
         return ans;
     }
 };
