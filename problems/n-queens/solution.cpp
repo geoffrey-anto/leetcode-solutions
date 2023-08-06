@@ -1,36 +1,40 @@
 class Solution {
 public:
-    
-    void f(vector<string> &board,int col ,vector<int> &left , vector<int> &lower, vector<int> &upper, vector<vector<string>> &ans, int n){
-        if(col==n){
+    void f(
+        int col, 
+        vector<string> &board, 
+        vector<vector<string>> &ans, 
+        int n,
+        vector<bool> &colChk,
+        vector<bool> &upDiag,
+        vector<bool> &downDiag
+    ) {
+        if(col == n) {
             ans.push_back(board);
             return;
         }
-        for(int i=0;i<n;i++){
-            if(left[i]!=1 and lower[i+col]!=1 and upper[n-1 + col - i]!=1){
-                left[i]=1;
-                lower[i+col]=1;
-                upper[n-1 + col - i]=1;
-                board[i][col]='Q';
-                f(board,col+1,left,lower,upper,ans,n);
-                left[i]=0;
-                lower[i+col]=0;
-                upper[n-1 + col - i]=0;
-                board[i][col]='.';
+
+        for(int row=0; row<n;row++) {
+            if(colChk[row] == false && upDiag[n-1 + col - row] == false && downDiag[row+col] == false) {
+                board[row][col]='Q';
+                colChk[row] = true;
+                upDiag[n-1+col-row] = true;
+                downDiag[row+col] = true;
+                f(col+1, board, ans, n, colChk, upDiag, downDiag);
+                board[row][col]='.';
+                colChk[row] = false;
+                upDiag[n-1+col-row] = false;
+                downDiag[row+col] = false;
             }
         }
-        return;
     }
-    
     vector<vector<string>> solveNQueens(int n) {
-        vector<string> board;
-        string s(n,'.');
-        for(int i=0;i<n;i++){
-            board.push_back(s);
-        }
-        vector<int> leftRow(n, 0), lowerDiagonal(2*n -1, 0), upperDiagonal(2*n -1);
         vector<vector<string>> ans;
-        f(board,0,leftRow,lowerDiagonal,upperDiagonal,ans,n);
+        vector<string> board(n, string(n, '.'));
+        vector<bool> colChk(n,false);
+        vector<bool> upDiagChk((2*n) - 1, false);
+        vector<bool> downDiagChk((2*n) - 1, false);
+        f(0, board, ans, n, colChk, upDiagChk, downDiagChk);
         return ans;
     }
 };
