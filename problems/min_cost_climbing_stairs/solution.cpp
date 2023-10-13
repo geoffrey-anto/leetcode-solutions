@@ -1,26 +1,23 @@
 class Solution {
 public:
-    int dp[1010];
-    // int helper(int n,vector<int> v){
-    //     if(n==0){
-    //         return dp[n]=v[n];
-    //     }
-    //     if(n==1){
-    //         return dp[n]=v[n];
-    //     }
-    //     if(dp[n]!=-1){
-    //         return dp[n];
-    //     }
-    //     return dp[n]=v[n]+min(helper(n+1,v),helper(n+2,v));
-    // }
-    int minCostClimbingStairs(vector<int>& cost) {
-        memset(&dp,-1,sizeof(dp));
-        int n=cost.size();
-        dp[0]=cost[0];
-        dp[1]=cost[1];
-        for(int i=2;i<n;i++){
-            dp[i]=min(dp[i-1],dp[i-2])+cost[i];
+
+    int f(vector<int>& cost, int i, int n, vector<int> dp) {
+        if ( i >= n-1) {
+            return 0;
         }
-        return min(dp[n-1],dp[n-2]);
+
+        if (dp[i] != INT_MAX) return dp[i];
+
+        return dp[i] = min(f(cost, i+1, n, dp) + cost[i], f(cost, i+2, n, dp) + cost[i+1]);
+    }
+
+    int minCostClimbingStairs(vector<int>& cost) {
+        int n=cost.size();
+        vector<int> dp(3, 0);
+        for(int i=n-2; i>=0; i--){
+            dp[i%3]=min(cost[i]+dp[(i+1)%3], cost[i+1]+dp[(i+2)%3]);
+        }
+        return dp[0];
+
     }
 };
