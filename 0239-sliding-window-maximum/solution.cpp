@@ -1,39 +1,26 @@
-// class Solution {
-// public:
-//     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-//         int mx = INT_MIN;
-//         vector<int  > ans;
-//         for(int i=0; i<=nums.size()-k; i++) {
-//             for(int j=i; j<i+k; j++) {
-//                 mx = max(mx, nums[j]);
-//             }
-//             ans.push_back(mx);
-//             mx = INT_MIN;
-//         }
-//         // lol not working TLE
-//         return ans;
-//     }
-// };
 class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        int n = nums.size();
+        priority_queue<pair<int, int>> pq;
+
+        for(auto i=0; i<k; i++) {
+            pq.push(make_pair(nums[i], i));
+        }
+
         vector<int> ans;
-        priority_queue<pair<int, int>> q;
-        for(int i=0; i<k; i++) {
-            q.push({nums[i], i});
+
+        for(auto i=k-1; i<n; i++) {
+            pq.push(make_pair(nums[i], i));
+
+            // now check if the topmost val lies in the window
+            // if not remove top till not found
+
+            while((i - pq.top().second) >= k) pq.pop();
+
+            ans.push_back(pq.top().first);
         }
-        for(int i=k-1; i<nums.size(); i++) {
-            q.push({nums[i], i});
-            while(true) {
-                if((i - q.top().second) >= k) {
-                    q.pop();
-                } else {
-                    break;
-                }
-            }
-            ans.push_back(q.top().first);
-        }
-        
+
         return ans;
     }
 };
