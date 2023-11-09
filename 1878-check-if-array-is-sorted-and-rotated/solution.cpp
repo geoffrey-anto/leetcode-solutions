@@ -1,24 +1,41 @@
 class Solution {
 public:
     bool check(vector<int>& nums) {
-        int k=0;
+        if(nums.size() == 1) {
+            return true;
+        }
         int n = nums.size();
-        for(int i=0;i<n-1;i++)
-        {
-            if(nums[i]<=nums[i+1] )
-            {
-                k++;
-            }         
+        
+        int pt = 1;
+        while(pt < n) {
+            if(nums[pt-1] <= nums[pt]) {
+                pt++;
+                continue;
+            } else {
+                break;
+            }
         }
-        if(k==n-2 && nums[0]>=nums[n-1])
-        {
+
+        for(auto i=pt; i<n-1; i++) {
+            if(nums[i] > nums[i+1]) {
+                return false;
+            }
+        }
+
+        cout << pt << endl;
+
+        if(pt == n) {
             return true;
         }
-        else if(k==n-1)
-        {
+
+        int lower = nums[0];
+        int high = nums[n-1];
+        int leftMid = nums[pt-1];
+        int rightMid = nums[pt];
+        if((rightMid <= high) and (high <= lower)) {
             return true;
         }
-        else
-            return false;
+
+        return false;
     }
 };
