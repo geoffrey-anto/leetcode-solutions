@@ -1,38 +1,29 @@
 class Solution {
 public:
-    template <typename T>
-    void print(T arr)
-    {
-        for (auto i : arr)
-        {
-            cout << i << ' ';
-        }
-        cout << endl;
-    }
-    void f(vector<int> &arr, int idx, int sum, int n, vector<int> &ds, vector<vector<int>> &ans){
-        if(idx == arr.size()) {
-            if(sum == 0) {
+    void solve(vector<int> &arr, int idx, int n, vector<vector<int>> &ans, vector<int> &ds, int sum, int target) {
+        if(idx == n) {
+            if(sum == target) {
                 ans.push_back(ds);
             }
-            return ;
+            return;
         }
 
-        // PICK
-        if(arr[idx] <=sum) {
+        if(arr[idx] + sum <= target) {
             ds.push_back(arr[idx]);
-            f(arr, idx, sum - arr[idx], n, ds, ans);
+            solve(arr, idx, n, ans, ds, sum+arr[idx], target);
             ds.pop_back();
         }
 
-        // NOT PICK
-        f(arr, idx+1, sum, n, ds, ans);
-
-        return ;
+        solve(arr, idx+1, n, ans, ds, sum, target);
     }
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<int> ds;
-        vector<vector<int>> ans;
-        f(candidates, 0, target, candidates.size(), ds, ans);
-        return ans;
+
+    vector<vector<int>> combinationSum(vector<int>& nums, int target) {
+       int n = nums.size();
+       vector<vector<int>> ans;
+       vector<int> ds;
+
+       solve(nums, 0, n, ans, ds, 0, target);
+
+       return ans;
     }
 };
