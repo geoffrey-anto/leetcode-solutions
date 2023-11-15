@@ -1,31 +1,30 @@
 class Solution {
 public:
-    void func(vector<int> &arr, int idx, int sum, int n, vector<int> &ds, vector<vector<int>> &ans)
-{
-    if (sum == 0)
-    {
-        ans.push_back(ds);
+    void f(vector<int> &nums, int idx, int sum, int n, vector<vector<int>> &ans, vector<int> &ds, int target) {
+        if(sum == target) {
+            ans.push_back(ds);
+        }
+
+        for(int i=idx; i<n; i++) {
+            if(i > idx && nums[i] == nums[i-1]) {
+                continue;
+            }
+
+            if(nums[i] + sum > target) {
+                break;
+            }
+
+            ds.push_back(nums[i]);
+            f(nums, i+1, sum + nums[i], n, ans, ds, target);
+            ds.pop_back();
+        }
     }
-
-    for (int i = idx; i < n; i++)
-    {
-        if (i > idx && arr[i] == arr[i - 1])
-            continue;
-        if (arr[i] > sum)
-            break;
-
-        ds.push_back(arr[i]);
-        func(arr, i + 1, sum - arr[i], n, ds, ans);
-        ds.pop_back();
+    vector<vector<int>> combinationSum2(vector<int>& nums, int target) {
+        int n = nums.size();
+        vector<vector<int>> ans;
+        vector<int> temp;
+        sort(nums.begin(), nums.end());
+        f(nums, 0, 0, n, ans, temp, target);
+        return ans;
     }
-}
-
-vector<vector<int>> combinationSum2(vector<int> &candidates, int target)
-{
-    vector<int> ds;
-    vector<vector<int>> ans;
-    sort(candidates.begin(), candidates.end());
-    func(candidates, 0, target, candidates.size(), ds, ans);
-    return ans;
-}
 };
