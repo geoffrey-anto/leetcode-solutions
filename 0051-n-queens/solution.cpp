@@ -1,30 +1,24 @@
 class Solution {
 public:
-    void f(
-        int col, 
-        vector<string> &board, 
-        vector<vector<string>> &ans, 
-        int n,
-        vector<bool> &colChk,
-        vector<bool> &upDiag,
-        vector<bool> &downDiag
-    ) {
-        if(col == n) {
+    bool isValid(int row, int i, int n, vector<bool> &colChk, vector<bool> &upDiag, vector<bool> &downDiag) {
+        return colChk[row] == false && upDiag[n-1 + i - row] == false && downDiag[row+i] == false;
+    }
+    void f(int i, vector<string> &board, vector<vector<string>> &ans, int n, vector<bool> &colChk, vector<bool> &upDiag, vector<bool> &downDiag) {
+        if(i == n) {
             ans.push_back(board);
-            return;
         }
 
         for(int row=0; row<n;row++) {
-            if(colChk[row] == false && upDiag[n-1 + col - row] == false && downDiag[row+col] == false) {
-                board[row][col]='Q';
+            if(isValid(row, i, n, colChk, upDiag, downDiag)) {
+                board[row][i] = 'Q';
                 colChk[row] = true;
-                upDiag[n-1+col-row] = true;
-                downDiag[row+col] = true;
-                f(col+1, board, ans, n, colChk, upDiag, downDiag);
-                board[row][col]='.';
+                upDiag[n-1 + i - row] = true;
+                downDiag[row+i] = true;
+                f(i+1, board, ans, n, colChk, upDiag, downDiag);
+                board[row][i] = '.';
                 colChk[row] = false;
-                upDiag[n-1+col-row] = false;
-                downDiag[row+col] = false;
+                upDiag[n-1 + i - row] = false;
+                downDiag[row+i] = false;
             }
         }
     }
