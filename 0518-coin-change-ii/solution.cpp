@@ -1,28 +1,29 @@
 class Solution {
 public:
-    int f(int idx, int amt, vector<int> &coins, int dp[500][6000]) {
-        if(amt == 0) {
-            return 1;
-        }
-        if(dp[idx][amt] != -1) {
-            return dp[idx][amt];
-        }
-        if(idx == coins.size()) {
+    int f(int i, int a, vector<int> &coins, int n, vector<vector<int>> &dp) {
+        if(i==n-1) {
+            if(a % coins[i] == 0) return 1;
+
             return 0;
         }
 
-        int take = 0;
-        if(amt >= coins[idx]) {
-            take = f(idx, amt-coins[idx], coins, dp);
-        }
-        int notTake = 0;
-        notTake = f(idx+1, amt, coins, dp);
+        if(dp[i][a] != -1) return dp[i][a];
 
-        return dp[idx][amt] = take+notTake;
+
+            int notTake = f(i+1, a, coins, n, dp);
+            int take = 0;
+            if(a >= coins[i]) {
+                take = f(i, a - coins[i], coins, n, dp); 
+            }
+
+        return dp[i][a] = take + notTake;
     }
+
     int change(int amount, vector<int>& coins) {
-        int dp[500][6000];
-        memset(&dp, -1, sizeof(dp));
-        return f(0, amount, coins, dp);
+        int n = coins.size();
+        vector<vector<int>> dp(n+1, vector<int>(amount+1, -1));
+       int res = f(0, amount, coins, coins.size(), dp);
+
+        return res;
     }
 };
