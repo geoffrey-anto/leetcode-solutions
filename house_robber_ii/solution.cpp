@@ -1,25 +1,35 @@
 class Solution {
 public:
+    int solve(vector<int> &nums, int i, vector<int> &dp) {
+        if(i < 0) return 0;
+
+        if(dp[i] != -1) return dp[i];
+
+        int a = solve(nums, i-1, dp);
+        int b = solve(nums, i-2, dp) + nums[i];
+
+        return dp[i] = max(a, b);
+    }
     
     int rob(vector<int>& nums) {
-        int n=nums.size();
-        vector<int>dp1(n),dp2(n);
-        if(n==1){
-            return nums[0];
+        int n = nums.size();
+        if(n==1) return nums[0];
+
+        vector<int> dp1(n+1, -1);
+        vector<int> dp2(n+1, -1);
+
+        vector<int> n1, n2;
+
+        for(int i=0; i<n;i++) {
+            if(i!=0) {
+                n1.push_back(nums[i]);
+            }
+
+            if(i != n-1) {
+                n2.push_back(nums[i]);
+            }
         }
-        dp1[0]=nums[0];
-        dp1[1]=max(nums[1],dp1[0]);
-        if(n==2){
-            return dp1[1];
-        }
-        for(int i=2;i<n-1;i++){
-            dp1[i]=max(dp1[i-1],nums[i]+dp1[i-2]);
-        }
-        dp2[1]=nums[1];
-        dp2[2]=max(nums[2],dp2[1]);
-        for(int i=3;i<n;i++){
-            dp2[i]=max(dp2[i-1],nums[i]+dp2[i-2]);
-        }
-        return max(dp1[n-2],dp2[n-1]);
+
+        return max(solve(n1, n1.size()-1, dp1), solve(n2, n2.size()-1, dp2));
     }
 };
