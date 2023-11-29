@@ -12,7 +12,7 @@ The solutions are implemented in various programming languages, including but no
 
 Each folder contains solutions in one or more of these languages, with clear file naming conventions for easy identification.
 
-## Folder Structure
+## Problems
 
 1)  Problem Link: [LeetCode](https://leetcode.com/problems/add-binary/) - Solution: [Add Binary](https://github.com/Geoffrey-Anto/leetcode-solutions/tree/main/add_binary)
 
