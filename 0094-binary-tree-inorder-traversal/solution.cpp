@@ -11,20 +11,19 @@
  */
 class Solution {
 public:
-    vector<int> mem;
-    
-    void inorder(TreeNode* root){
-        if(root==nullptr){
+void inOrder(TreeNode* root, vector<int> &ans) {
+        if(root == nullptr) {
             return;
         }
-        inorder(root->left);
-        mem.push_back(root->val);
-        inorder(root->right);
+
+        inOrder(root->left, ans);
+        ans.push_back(root->val);
+        inOrder(root->right, ans);
     }
-    
-    
     vector<int> inorderTraversal(TreeNode* root) {
-        inorder(root);
-        return mem;
+        vector<int> ans;
+        inOrder(root, ans);
+
+        return ans;
     }
 };
