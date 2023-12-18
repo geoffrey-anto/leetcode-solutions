@@ -1,22 +1,15 @@
 class Solution {
 public:
     string destCity(vector<vector<string>>& paths) {
-        map<string, string> mp;
-        for(auto &i: paths) {
-            mp[i[0]] = i[1];
+        vector<string> ans;
+        for(int i=0;i<paths.size();i++){
+            ans.push_back(paths[i][0]);
         }
-
-        string start = paths[0][0];
-
-        while(true) {
-            string next = mp[start];
-            if(next == "") {
-                return start;
-            } else {
-                start = next;
+        for(int i=0;i<paths.size();i++){
+            if(count(ans.begin(),ans.end(),paths[i][1])==0){
+                return paths[i][1];
             }
         }
-
         return "";
     }
 };
