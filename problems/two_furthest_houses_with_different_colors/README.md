@@ -1,0 +1,24 @@
+# Two Furthest Houses With Different Colors
+
+## Leetcode Link: [Two Furthest Houses With Different Colors](https://leetcode.com/problems/two-furthest-houses-with-different-colors/)
+### Language: C++
+
+```cpp
+class Solution {
+public:
+    int maxDistance(vector<int>& colors) {
+        int n=colors.size();
+        int ans=-1;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(colors[i]!=colors[j]){
+                    ans = max(ans, abs(i-j));
+                }
+            }
+        }
+        return ans;
+    }
+};```
+
+
+
