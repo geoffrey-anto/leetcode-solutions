@@ -13,11 +13,11 @@ public:
         if (s.size() < t.size()) return "";
         int n = s.size();
         int m = t.size();
-        unordered_map<char, int> t_map;
-        unordered_map<char, int> s_map;
+        unordered_map<char, int> t_freq;
+        unordered_map<char, int> s_freq;
 
         for(char i: t) {
-            t_map[i]++;
+            t_freq[i]++;
         }
 
         // Pointers to interate the windows
@@ -36,19 +36,19 @@ public:
         
 
         for(right = 0; right < n; right++) {
-            s_map[s[right]]++;
+            s_freq[s[right]]++;
 
             // Check if the s[right] is in t... if its there and present correct amt of times
             // update cnt as +1
-            if(find(t_map, s[right]) and s_map[s[right]] == t_map[s[right]]) {
+            if(find(t_freq, s[right]) and s_freq[s[right]] == t_freq[s[right]]) {
                 cnt++;
             }
 
             // this means that all the elements are there in the window
-            while (cnt == t_map.size()) {
+            while (cnt == t_freq.size()) {
                 int currSize = right - left + 1;
 
-                // Update ig a min found
+                // Update if a min found
                 if(currSize < globalMin) {
                     globalMin = currSize;
                     ans.left = left;
@@ -56,14 +56,14 @@ public:
                 }
 
                 // now remove the rear end element from window
-                s_map[s[left]]--;
+                s_freq[s[left]]--;
 
                 // Check if the rear end is in the t string
                 // If yes check if the new value is not accepted, i.e, if the cound of s[left] is
                 // less than the one in the t string
                 // if less reduce the count.. this tells more elements is need to completet string 
-                if(find(t_map, s[left])) {
-                    if(s_map[s[left]] < t_map[s[left]]) {
+                if(find(t_freq, s[left])) {
+                    if(s_freq[s[left]] < t_freq[s[left]]) {
                         cnt--;
                     }
                 }
