@@ -1,0 +1,24 @@
+# Minimum Number Game
+
+## Leetcode Link: [Minimum Number Game](https://leetcode.com/problems/minimum-number-game/)
+### Language: C++
+
+```cpp
+class Solution {
+public:
+    vector<int> numberGame(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        
+        vector<int> ans;
+        
+        for(auto i=0; i<nums.size(); i+=2) {
+            ans.push_back(nums[i+1]);
+            ans.push_back(nums[i]);
+        }
+        
+        return ans;
+    }
+};```
+
+
+
