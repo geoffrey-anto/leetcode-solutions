@@ -1,42 +1,36 @@
 class Solution {
 public:
+    int f(int i, int j1, int j2, vector<vector<int>>& grid, int c, int r, vector<vector<vector<int>>> &dp){
+        if(i==r-1){
+            if(j1==j2) return grid[i][j1];
+            else return grid[i][j1]+grid[i][j2];
+        }
+        
+        if(dp[i][j1][j2]!=-1) return dp[i][j1][j2];
+        
+        int mx=0;
+
+        for(int x1=-1; x1<2; x1++){
+            for(int x2=-1; x2<2; x2++){
+                if(j1+x1<0 or j2+x2<0 or j1+x1>=c or j2+x2 >= c) continue;
+
+                int value=0;
+                if(j1==j2) value = grid[i][j1];
+                else value = grid[i][j1]+grid[i][j2];
+
+                value+=f(i+1, j1+x1, j2+x2, grid, c, r, dp);
+                mx=max(mx, value);
+            }
+        }
+        return dp[i][j1][j2] = mx;
+    }
+    
     int cherryPickup(vector<vector<int>>& grid) {
         int r = grid.size();
         int c = grid[0].size();
         
-        vector<vector<int>> prev(c, vector<int> (c, 0));
+        vector<vector<vector<int>>> dp(r, vector<vector<int>>(c, vector<int>(c,-1)));
         
-        for(int j1=0;j1<c;j1++){
-            for(int j2=0; j2<c; j2++){
-                if(j1==j2) prev[j1][j2] = grid[r-1][j1];
-                else prev[j1][j2] = grid[r-1][j1]+grid[r-1][j2];
-            }
-        }
-        
-        for(int i=r-2; i>=0; i--){
-            vector<vector<int>> curr(c, vector<int> (c, 0));
-            for(int j1=0; j1<c; j1++){
-                for(int j2=0; j2<c; j2++){
-                    int mx=-1e8;
-
-                    for(int x1=-1; x1<2; x1++){
-                        for(int x2=-1; x2<2; x2++){
-                            int value=0;
-                            if(j1==j2) value = grid[i][j1];
-                            else value = grid[i][j1]+grid[i][j2];
-                            if(j1+x1>=0 and j2+x2>=0 and j1+x1<c and j2+x2<c)
-                                value+=prev[j1+x1][j2+x2];
-                            else
-                                value+= -1e8;
-                            mx=max(mx, value);
-                        }
-                    }
-                    curr[j1][j2] = mx;
-                }
-            }
-            prev=curr;
-        }
-        
-        return prev[0][c-1];
+        return f(0, 0, c-1, grid, c, r, dp);
     }
 };
