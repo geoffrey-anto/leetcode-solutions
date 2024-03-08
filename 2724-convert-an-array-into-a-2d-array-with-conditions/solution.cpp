@@ -1,31 +1,28 @@
 class Solution {
 public:
     vector<vector<int>> findMatrix(vector<int>& nums) {
-        int maxEle = *max_element(nums.begin(), nums.end());
-        vector<int> map(maxEle + 1, 0);
-
-        int mx = 0;
-
-        for(auto &i: nums) {
-            map[i]++;
-            mx = max(mx, map[i]);
+        map<int, int> mp;
+        
+        for(auto i: nums) {
+            mp[i]++;
         }
-
-        vector<vector<int>> ans(mx, vector<int>());
-        int n = nums.size();
-
-        for(int i=0; i<=maxEle; i++) {
-            int val = map[i];
-
-            if(val == 0) {
-                continue;
-            }
-
-            for(int j=0; j<val; j++) {
-                ans[j].push_back(i);
-            }
+        
+        priority_queue<pair<int, int>> pq;
+        
+        for(auto &[k, v]: mp) {
+            pq.push({v, k});
         }
-
+        
+        vector<vector<int>> ans(pq.top().first, vector<int>());
+        
+        while(!pq.empty()) {
+            pair<int, int> t = pq.top();
+            for(int i=0; i<t.first; i++) {
+                ans[i].push_back(t.second);
+            }
+            pq.pop();
+        }
+        
         return ans;
     }
 };
