@@ -1,24 +1,25 @@
 class Solution {
 public:
     int maxFrequencyElements(vector<int>& nums) {
-        unordered_map<int, int> mp;
-        
-        for(auto &i: nums) {
-            mp[i]++;
+        unordered_map<int, int> map;
+        for(auto i: nums) {
+            map[i]++;
         }
-        
+
         int mx = 0;
-        int curr = 0;
-        
-        for(auto &[k, v]: mp) {
+        int mxF = 0;
+
+        for(auto &[k, v]: map) {
             if(v > mx) {
                 mx = v;
-                curr = v;
+                mxF = v;
             } else if(v == mx) {
-                curr += v;
+                mxF += v;
+            } else {
+                continue;
             }
         }
-        
-        return curr;
+
+        return mxF;
     }
 };
