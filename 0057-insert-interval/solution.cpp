@@ -35,8 +35,6 @@ public:
             i++;
         }
 
-        cout << pos << endl;
-
         return ans;
 
     }
