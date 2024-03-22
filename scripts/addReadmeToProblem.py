@@ -54,7 +54,7 @@ def main():
                         readmeWriter.write(f"```{file.split('.')[-1]}\n")
                         readmeWriter.write(fileReader.read())
                         readmeWriter.write(f"```\n\n")
-                    readmeWriter.write("\n\n")
+                        readmeWriter.write("\n\n")
 
 
 if __name__ == "__main__":

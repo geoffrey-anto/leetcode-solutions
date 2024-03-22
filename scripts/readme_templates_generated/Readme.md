@@ -904,3 +904,15 @@ Each folder contains solutions in one or more of these languages, with clear fil
 
 445.  Problem Link: [Visit Array Positions To Maximize Score](https://leetcode.com/problems/visit-array-positions-to-maximize-score/) - Solution: [Solution](https://github.com/Geoffrey-Anto/leetcode-solutions/tree/main/problems/visit_array_positions_to_maximize_score)
 
+446.  Problem Link: [Count The Number Of Complete Components](https://leetcode.com/problems/count-the-number-of-complete-components/) - Solution: [Solution](https://github.com/Geoffrey-Anto/leetcode-solutions/tree/main/problems/count_the_number_of_complete_components)
+
+447.  Problem Link: [Freedom Trail](https://leetcode.com/problems/freedom-trail/) - Solution: [Solution](https://github.com/Geoffrey-Anto/leetcode-solutions/tree/main/problems/freedom_trail)
+
+448.  Problem Link: [Least Number Of Unique Integers After K Removals](https://leetcode.com/problems/least-number-of-unique-integers-after-k-removals/) - Solution: [Solution](https://github.com/Geoffrey-Anto/leetcode-solutions/tree/main/problems/least_number_of_unique_integers_after_k_removals)
+
+449.  Problem Link: [Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) - Solution: [Solution](https://github.com/Geoffrey-Anto/leetcode-solutions/tree/main/problems/longest_consecutive_sequence)
+
+450.  Problem Link: [Maximum Number Of Moves In A Grid](https://leetcode.com/problems/maximum-number-of-moves-in-a-grid/) - Solution: [Solution](https://github.com/Geoffrey-Anto/leetcode-solutions/tree/main/problems/maximum_number_of_moves_in_a_grid)
+
+451.  Problem Link: [Maximum Segment Sum After Removals](https://leetcode.com/problems/maximum-segment-sum-after-removals/) - Solution: [Solution](https://github.com/Geoffrey-Anto/leetcode-solutions/tree/main/problems/maximum_segment_sum_after_removals)
+
