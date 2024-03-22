@@ -1,26 +1,72 @@
-// class Solution {
-// public:
-//     vector<int> majorityElement(vector<int>& nums) {
-//         unordered_map<int, int> freq;
-//         for(auto &i: nums){
-//             freq[i]++;
-//         }
-//         vector<int> ans;
-//         for(auto &i: freq) {
-//             if(i.second > nums.size()/3) {
-//                 ans.push_back(i.first);
-//             }
-//         }
-//         return ans;
-//     } 
-// };
-
 class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
-        // so at max only 2 elements can be there
-        // len(ans) <= 2
-        // moore voting algo
+        // int can = INT_MIN;
+        // int v = 0;
+        // int n = nums.size();
+        // vector<int> ans;
+
+        // for(int i=0; i<n; i++) {
+        //     if(v == 0) {
+        //         can = nums[i];
+        //         v=1;
+        //     } else {
+        //         if(can == nums[i]) {
+        //             v++;
+        //         } else {
+        //             v--;
+        //         }
+        //     }
+                
+        // }
+        // cout << can;
+
+        // int cnt = 0;
+
+        // for(int i=0; i<n; i++) {
+        //     if(nums[i] == can) {
+        //         cnt++;
+        //     }
+        // }
+
+        // if(cnt > n/3) {
+        //     ans.push_back(can);
+        // }
+
+        // int can2 = INT_MIN;
+        // int v2 = 0;
+
+        // for(int i=0; i<n; i++) {
+        //     if(nums[i] == can) {
+        //         continue;
+        //     }
+
+        //     if(v2 == 0) {
+        //         can2 = nums[i];
+        //     } else {
+        //         if(can2 == nums[i]) {
+        //             v2++;
+        //         } else {
+        //             v2--;
+        //         }
+        //     }
+
+            
+        // }
+
+        // cnt = 0;
+
+        // for(int i=0; i<n; i++) {
+        //     if(nums[i] == can2) {
+        //         cnt++;
+        //     }
+        // }
+
+        // if(cnt > n/3) {
+        //     ans.push_back(can2);
+        // } 
+
+        // return ans;
 
         int cnt1 = 0;
         int e1 = 0;
@@ -68,5 +114,5 @@ public:
         } else {
             return {};
         }
-    } 
+    }
 };
