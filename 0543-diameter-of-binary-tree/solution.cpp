@@ -24,5 +24,4 @@ public:
         d=max(d,ld+rd);
         return max(ld,rd)+1;
     }
-	
 };
