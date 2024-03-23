@@ -10,19 +10,22 @@
 class Solution {
 public:
     TreeNode* f(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if (root == nullptr or root == p or root == q) {
+        if(root == nullptr || root == p || root == q) {
             return root;
-        }
-
+        } 
         auto l = f(root->left, p, q);
         auto r = f(root->right, p, q);
 
-        if(l == nullptr) {
-            return r;
+        if(l && r) {
+            return root;
         }
 
-        if(r == nullptr) {
+        if(!r) {
             return l;
+        }
+
+        if(!l) {
+            return r;
         }
 
         return root;
