@@ -36,7 +36,6 @@ public:
         string encoded = "";
         encoded = _encode(root, encoded);
         encoded = encoded.substr(0,encoded.size()-1);
-        cout << encoded <<endl;
         return encoded;
     }
 
