@@ -10,7 +10,7 @@ public:
     int next(int price) {
         // if empty at first make a new entry and push and return 1 since this is the first
         if (st.empty()) {
-            st.push(std::make_pair(price, i++));
+            st.push(make_pair(price, i++));
             return 1;
         } else {
             // now pop out till u find the element which is greater than the curr
