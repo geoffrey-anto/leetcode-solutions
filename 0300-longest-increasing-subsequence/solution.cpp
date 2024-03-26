@@ -10,9 +10,7 @@ public:
         int notTake = 0 + f(curr+1, prev, n, nums, dp);
 
         int take = 0;
-        if(prev == -1) {
-            take = 1 + f(curr+1, curr, n, nums, dp);
-        } else if(nums[curr] > nums[prev]) {
+        if(prev == -1 or nums[curr] > nums[prev]) {
             take = 1 + f(curr+1, curr, n, nums, dp);
         }
 
@@ -21,8 +19,6 @@ public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
         vector<vector<int>> dp(n, vector<int> (n+1, -1));
-
-        
 
         return f(0, -1, n, nums, dp);
     }
