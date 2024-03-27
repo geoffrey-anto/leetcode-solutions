@@ -1,25 +1,25 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        unordered_map<char, int> mp;
-        int n = s.length();
-        int mx = 0;
+        int curr = 0;
         int prev = 0;
-        
-        for (int i = 0; i < n; i++) {
+
+        unordered_map<char, int> mp;
+
+        int ans = 0;
+
+        for(int i=0; i<s.size(); i++) {
             char curr = s[i];
-            // check if it already in map
-            if (mp.find(s[i]) == mp.end() || mp[s[i]] < prev) {
-                // if not there take the max between last found idx and curr idx
-                mx = max(mx, i - prev + 1);
+
+            if(mp.find(curr) == mp.end() or mp[s[i]] < prev) {
+                ans = max(ans, (i - prev + 1));
             } else {
-                // else if there update the prev
-                prev = mp[s[i]] + 1;
+                prev = mp[curr] + 1;
             }
-            // store the val in map
-            mp[s[i]] = i;
+
+            mp[curr] = i;
         }
-        
-        return mx;
+
+        return ans;
     }
 };
