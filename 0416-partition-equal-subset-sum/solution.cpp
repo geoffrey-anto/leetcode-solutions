@@ -1,51 +1,36 @@
 class Solution {
 public:
-    bool f(int idx, vector<int> &nums, int sum, vector<vector<int>> &dp){
-        if(sum == 0) return true;
-        if(idx == 0) return (sum == nums[0]);
-        
-        if(dp[idx][sum] != -1) return dp[idx][sum];
-        
-        bool notpick = f(idx-1, nums, sum, dp);
-        bool pick = false;
-        if(sum>=nums[idx]) pick = f(idx-1, nums, sum-nums[idx], dp);
-        
-        dp[idx][sum] = (pick or notpick);
-        return (pick or notpick);
+    bool f(int i, int sum, int target, vector<int> &nums, vector<vector<int>> &dp) {
+        if(sum == target) {
+            return true;
+        }
+
+        if(sum > target) {
+            return false;
+        }
+
+        if(i == nums.size()) {
+            return false;
+        }
+
+        if(dp[i][sum] != -1) {
+            return dp[i][sum];
+        }
+
+        int nt = f(i+1, sum, target, nums, dp);
+
+        int t = f(i+1, sum + nums[i], target, nums, dp);
+
+        return dp[i][sum] = nt or t;
     }
     
     bool canPartition(vector<int>& nums) {
-        int n = nums.size();
-        int sum = 0;
-        
-        for(auto &i: nums){
-            sum+=i;
-        }
-        vector<bool> prev(sum+1, false);
-        
-        if(sum%2!=0){
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        vector<vector<int>> dp(nums.size()+1, vector<int> (sum / 2, -1));
+        if(sum % 2 != 0) {
             return false;
-        } else {
-            vector<bool> curr(sum+1, false);
-            sum=sum/2;
-            int target=sum;
-            prev[0] = true;
-            curr[0] = true;
-            for(int idx=1;idx<n;idx++){
-                
-                for(int sum=1; sum<=target; sum++){
-                    bool notpick = prev[sum];
-                    bool pick = false;
-                    if(sum>=nums[idx]){
-                        pick = prev[sum-nums[idx]];
-                    }
-
-                    curr[sum] = (pick or notpick);
-                }
-                prev=curr;
-            }
-            return prev[target];
         }
-        return false;
+
+        return f(0, 0, sum / 2, nums, dp);
     }
 };
