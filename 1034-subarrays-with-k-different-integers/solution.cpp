@@ -1,6 +1,6 @@
 class Solution {
 public:
-    // Exactly(k) = almost(k) - almost(k-1);
+    // Exactly(k) = atmost(k) - atmost(k-1);
     int countSubarraysWithKDistinct(vector<int>& nums, int k) {
         std::map<int, int> freq;
         int i = 0;
