@@ -16,7 +16,7 @@ public:
         st.push_back(num[0]);
 
         for(auto i=1; i<n; i++) {
-            while(k > 0 && st.size() != 0 && st[st.length()-1] > num[i]) {
+            while(k > 0 && st.size() != 0 && st.back() > num[i]) {
                 k--;
                 st.pop_back();
             }
