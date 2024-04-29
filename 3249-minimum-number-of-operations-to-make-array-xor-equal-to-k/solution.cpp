@@ -15,7 +15,7 @@ public:
         
         // so just compare all the bits ;
         
-        // ig i can pad all the bits with 0 MSB's
+        // ig can pad all the bits with 0 MSB's
         
         int x = nums[0];
 
