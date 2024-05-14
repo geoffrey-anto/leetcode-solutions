@@ -31,6 +31,7 @@ public:
                 if(grid[i][j] == 0) {
                     continue;
                 }
+                
                 vector<vector<bool>> vis(n, vector<bool>(m, false));
                 ans = max(ans, grid[i][j] + f(grid, i, j, vis));
             }
