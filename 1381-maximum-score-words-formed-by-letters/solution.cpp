@@ -1,50 +1,58 @@
 class Solution {
 public:
-    int getScore(string s, unordered_map<char, int> letters, vector<int>& score) {
-        int ans = 0;
+    int getCost(string &str, unordered_map<char, int> cnt, vector<int>& s) {
+        int cost = 0;
 
-        for(auto &i: s) {
-            if(letters[i] == 0) {
+        for(auto &i: str) {
+            if(cnt[i] > 0) {
+                cost += s[i - 'a'];
+                cnt[i]--;
+            } else {
                 return -1;
             }
-
-            letters[i]--;
-
-            ans += score[i-'a'];
         }
 
-        return ans;
+        return cost;
     }
 
-    int f(int i, vector<string>& words, unordered_map<char, int> letters, vector<int>& score, int n) {
-        if(i == n) {
+    int f(int i, vector<string>& words, unordered_map<char, int> &cnt, vector<int>& s, vector<int> dp) {
+        if(i == words.size()) {
             return 0;
         }
 
-        int take = -1e8;
-
-        int notTake = f(i+1, words, letters, score, n);
-
-        int s = getScore(words[i], letters, score);
-
-        if(s != -1) {
-            for(auto &i: words[i]) {
-                letters[i]--;
-            }
-
-            take = s + f(i+1, words, letters, score, n);
+        if(dp[i] != -1) {
+            return dp[i];
         }
 
-        return max(notTake, take);
+        int nt = 0;
+        int t = 0;
+
+        nt = f(i+1, words, cnt, s, dp);
+
+        int cost = getCost(words[i], cnt, s);
+
+        if(cost != -1) {
+            for(auto &j: words[i]) {
+                cnt[j]--;
+            }
+            t = cost + f(i+1, words, cnt, s, dp);
+            for(auto &j: words[i]) {
+                cnt[j]++;
+            }
+        }
+
+        return dp[i] = max(t, nt);
     }
 
     int maxScoreWords(vector<string>& words, vector<char>& letters, vector<int>& score) {
-        unordered_map<char, int> mp;
+        unordered_map<char, int> cnt;
 
-        for(auto &i: letters) {
-            mp[i]++;
+        for(auto i: letters) {
+            cnt[i]++;
         }
 
-        return f(0, words, mp, score, words.size());
+        vector<int> dp(words.size()+1, -1);
+
+        return f(0, words, cnt, score, dp);
     }
 };
