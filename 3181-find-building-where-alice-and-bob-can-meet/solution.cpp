@@ -80,11 +80,7 @@ public:
 
 
             while ( xb >= 0 && xb < n && heights[xb] <= heights[a] ) {
-                if(xb >= 0 && xb < n) {
-                    xb = nextGreater[xb];
-                } else {
-                    break;
-                }
+                xb = nextGreater[xb];
             }
 
 
