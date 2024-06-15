@@ -1,48 +1,40 @@
 class Solution {
 public:
     int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {
-        int mCap = *min_element(capital.begin(), capital.end());
+        int n = profits.size();
 
-        if(mCap > w) {
-            return 0;
-        }
+        vector<int> sc(n, 0);
 
-        int ans = w;
+        iota(begin(sc), end(sc), 0);
 
-        vector<pair<int, int>> arr;
-
-        int n = capital.size();
-
-        for(int i=0; i<n; i++) {
-            arr.push_back({profits[i], capital[i]});
-        }
-
-        sort(arr.begin(), arr.end(), [&](auto &a, auto &b){
-            return a.second < b.second;
+        sort(begin(sc), end(sc), [&capital](const int& a, const int& b) {
+            return capital[a] < capital[b];
         });
 
-        priority_queue<int> pq;
+        int i = 0;
 
-        int currI = 0;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, less<pair<int, int>>> pq;
 
-        while(true) {
-            if(k == 0) {
-                break;
-            }
+        while(i < n and capital[sc[i]] <= w) {
+            pq.push({profits[sc[i]], capital[sc[i]]});
+            i++;
+        }
 
-            while(currI < n && arr[currI].second <= ans) {
-                pq.push(arr[currI].first);
-                currI++;
-            }
+        while(k > 0 and !pq.empty()) {
+            auto t = pq.top();
+            pq.pop();
 
-            if(!pq.empty()) {
-                ans += pq.top();
-                pq.pop();
+            w += t.first;
+
+            while(i < n and capital[sc[i]] <= w) {
+                pq.push({profits[sc[i]], capital[sc[i]]});
+                i++;
             }
 
             k--;
         }
 
+        int ans = w;
 
         return ans;
     }
