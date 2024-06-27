@@ -1,15 +1,30 @@
 class Solution {
 public:
     int findCenter(vector<vector<int>>& edges) {
-        if(edges[0][0] == edges[1][0]){
-            return edges[0][0];
-        }else if(edges[0][0] == edges[1][1]){
-            return edges[0][0];
-        }else if(edges[0][1] == edges[1][0]){
-            return edges[0][1];
-        }else if(edges[0][1] == edges[1][1]){
-            return edges[0][1];
+        int a, b, c, d;
+
+        a = edges[0][0];
+        b = edges[0][1];
+
+        c = edges[1][0];
+        d = edges[1][1];
+
+        if(a == c) {
+            return a;
         }
-        return 0;
+
+        if(b == c) {
+            return b;
+        }
+
+        if(a == d) {
+            return a;
+        }
+
+        if(b == d) {
+            return b;
+        }
+
+        return -1;
     }
 };
