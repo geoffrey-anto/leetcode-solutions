@@ -62,7 +62,7 @@ class DSU {
         return true;
     }
 
-    int getNoOfComponents() {
+    int isAConnectedComponent() {
         int ans = 0;
         set<int> s;
         
@@ -93,11 +93,11 @@ public:
                 ans += !bob.unionBySize(edge[1], edge[2]);
             if(edge[0] == 3) {
                 ans += !bob.unionBySize(edge[1], edge[2]);
-                !alice.unionBySize(edge[1], edge[2]);
+                alice.unionBySize(edge[1], edge[2]);
             }
         }
 
-        if(!alice.getNoOfComponents() or !bob.getNoOfComponents()) {
+        if(!alice.isAConnectedComponent() or !bob.isAConnectedComponent()) {
             return -1;
         }
 
