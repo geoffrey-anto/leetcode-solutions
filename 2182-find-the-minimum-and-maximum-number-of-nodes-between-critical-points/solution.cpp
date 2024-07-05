@@ -10,52 +10,46 @@
  */
 class Solution {
 public:
-    vector<int> f(ListNode* head) {
-        int mnDist = INT_MAX;
-        int prevIdx = -1;
-        int firstNodePos = -1;
-
-        int lastNodePos = -1;
-        ListNode* temp = head->next;
-        ListNode* prev = head;
-
-        int i = 1;
-
-        while(temp && temp->next) {
-            int p = prev->val;
-            int c = temp->val;
-            int n = temp->next->val;
-
-            if((c > p && c > n) || (c < p && c < n)) {
-                if(prevIdx != -1)
-                    mnDist = min(mnDist, i - prevIdx);
-
-                prevIdx = i;
-
-                if(firstNodePos == -1) {
-                    firstNodePos = i;
-                }
-
-                lastNodePos = i;
-            }
-
-            i++;
-            prev = temp;
-            temp = temp->next;
-        }
-
-
-        if(mnDist == INT_MAX) {
-            if(firstNodePos == lastNodePos) {
-                return {-1, -1};
-            }
-            return {-1, lastNodePos - firstNodePos};
-        }
-
-        return {mnDist, lastNodePos - firstNodePos};
-    }
-
     vector<int> nodesBetweenCriticalPoints(ListNode* head) {
-        return f(head);
+        vector<int> pts;
+
+        int prev = head->val;
+
+        int pos = 1;
+        head = head->next;
+
+        while(head and head->next) {
+            int val = head->val;
+
+            int nx = head->next->val;
+
+            if((val > nx and val > prev) or (val < nx and val < prev)) {
+                pts.push_back(pos);
+            }
+            prev = head->val;
+
+            head = head->next;
+            pos++;
+        }
+
+        // for(auto i: pts) {
+        //     cout << i << endl;
+        // }
+
+        vector<int> ans(2, INT_MAX);
+
+        if(pts.size() < 2) {
+            return  {-1, -1};
+        }
+
+        ans[1] = pts[pts.size() - 1] - pts[0]; 
+
+        sort(begin(pts), end(pts));
+
+        for(int i=0; i<pts.size()-1; i++) {
+            ans[0] = min(ans[0], pts[i+1] - pts[i]);
+        }
+
+        return ans;
     }
 };
