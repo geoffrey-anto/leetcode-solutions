@@ -1,64 +1,38 @@
-class Robot {
-    public:
-    int pos;
-    int h;
-    char d;
-    int i;
-
-    Robot(int a, int b, char c, int f) {
-        pos = a;
-        h = b;
-        d = c;
-        i = f;
-    }
-};
-
 class Solution {
 public:
-    vector<int> survivedRobotsHealths(vector<int>& p, vector<int>& h, string d) {
-        vector<Robot> v;
-        int n = p.size();
-        vector<int> idx;
+    vector<int> survivedRobotsHealths(vector<int>& positions, vector<int>& healths, string directions) {
+        stack<int> st;
+        int n = positions.size();
 
-        for(int i=0; i<n; i++) {
-            idx.push_back(i);
-            v.push_back(Robot(p[i], h[i], d[i], i));
-        }
+        vector<int> p(n, 0);
+        iota(begin(p), end(p), 0);
 
-
-        sort(begin(idx), end(idx), [&](int a, int b) {
-            if(v[a].pos < v[b].pos) {
-                return true;
-            } else {
-                return false;
-            }
+        sort(begin(p), end(p), [&](const int &a, const int &b) {
+            return positions[a] < positions[b];
         });
 
+        vector<int> res;
 
-        vector<int> health(h);
 
-        stack<int> st;
-
-        for(auto i: idx) {
-            if(v[i].d == 'R') {
+        for(auto i: p) {
+            if(directions[i] == 'R') {
                 st.push(i);
             } else {
                 while(!st.empty()) {
-                    // cout << health[i] << "-" << health[x] << endl;
                     auto x = st.top();
 
-                    if(health[x] == health[i]) {
-                        health[i] = 0;
-                        health[x] = 0;
+                    if(healths[x] == healths[i]) {
+                        healths[i] = 0;
+                        healths[x] = 0;
                         st.pop();
                         break;
-                    } else if(health[x] > health[i]) {
-                        health[i] = 0;
-                        health[x]--;
+                    } else if(healths[x] > healths[i]) {
+                        healths[i] = 0;
+                        healths[x]--;
                         break;
                     } else {
-                        health[x] = 0;
-                        health[i]--; 
+                        healths[x] = 0;
+                        healths[i]--; 
                         st.pop();
                     }
                 }
@@ -66,15 +40,12 @@ public:
         }
 
 
-        vector<int> ans;
-
         for(int i=0; i<n; i++) {
-            if(health[i] > 0) {
-                ans.push_back(health[i]);
+            if(healths[i] > 0) {
+                res.push_back(healths[i]);
             }
         }
 
-
-        return ans;
+        return res;
     }
 };
