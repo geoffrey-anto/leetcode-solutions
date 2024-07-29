@@ -45,6 +45,7 @@ public:
 
         return dp[idx][c][turn] = (take);
     }
+    
     int numTeams(vector<int>& rating) {
         memset(dp, -1, sizeof(dp));
         int ans = 0;
