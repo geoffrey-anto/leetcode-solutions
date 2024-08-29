@@ -9,11 +9,13 @@ class DSU {
     }
 
 public:
+    int count = 0;
     DSU(int n) {
         for(int i=0; i<n; i++) {
             rank.push_back(0);
             parent.push_back(i);
         }
+        count = 0;
     }
 
     bool isSameComponent(int u, int v) {
@@ -36,19 +38,12 @@ public:
             parent[parentV] = parentU;
             rank[parentU]++;
         }
+
+        count++;
     }
 
     int getNoOfComponents() {
-        int ans = 0; 
-
-        for(int i=0; i<parent.size(); i++) {
-            cout << parent[i] << " " << rank[i] << endl;
-            if(parent[i] == i && rank[i] != 0)  {
-                ans++;
-            }
-        }
-
-        return ans;
+        return count;
     }
 };
 
@@ -75,7 +70,7 @@ public:
         // DSU dsu = DSU(n);
 
         // for(auto &st: stones) {
-        //     dsu.unionAdd(st[0], st[1]);
+        //     dsu.unionAdd(st[0] + (int)(1e4 + 1), st[1]);
         // }
 
         // return n - dsu.getNoOfComponents();
