@@ -1,3 +1,6 @@
+#include<bits/stdc++.h>
+using namespace std;
+
 class Node {
     private:
     int n = 10;
@@ -98,6 +101,34 @@ class Trie {
         return temp->getPrefix();
     }
 
+    bool isPrefix(string &s) {
+        Node* temp = root;
+
+        for(auto &ch: s) {
+            if(!temp->contains(ch)) {
+                return false;
+            }
+            temp = temp->get(ch);
+        }
+
+        return true;
+    }
+
+    int getLongestPre(string &s) {
+        Node* temp = root;
+        int ans = 0;
+        for(auto &ch: s) {
+            if(!temp->contains(ch)) {
+                return ans;
+            }
+
+            ans++;
+            temp = temp->get(ch);
+        }
+
+        return ans;
+    } 
+
     void erase(string &s) {
         Node* temp = root;
 
@@ -112,22 +143,6 @@ class Trie {
 
         temp->eraseEnd();
     }
-
-    int getLongestPrefix(string &s) {
-        Node* temp = root;
-
-        int mx = 0;
-
-        for(auto &ch: s) {
-            if(!temp->contains(ch)) {
-                return mx;
-            }
-            temp = temp->get(ch);
-            mx++;
-        }
-
-        return mx;
-    }
 };
 
 class Solution {
@@ -135,18 +150,24 @@ public:
     int longestCommonPrefix(vector<int>& arr1, vector<int>& arr2) {
         Trie* t = new Trie();
 
-        for(auto &i: arr1) {
-            string s = to_string(i);
-            t->insert(s);
+        if(arr1.size() > arr2.size()) {
+            swap(arr1, arr2);
         }
 
-        int mx = 0;
+        for(auto i: arr1) {
+            string temp = to_string(i);
 
-        for(auto &i: arr2) {
-            string s = to_string(i);
-            mx = max(mx, t->getLongestPrefix(s));
+            t->insert(temp);
         }
 
-        return mx;
+        int ans = 0;
+
+        for(auto i: arr2) {
+            string temp = to_string(i);
+
+            ans = max(ans, t->getLongestPre(temp));
+        }
+
+        return ans;
     }
 };
