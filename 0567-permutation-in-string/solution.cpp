@@ -1,27 +1,38 @@
 class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
-        vector<int> mp1(26), mp2(26);
+        unordered_map<char, int> mp1, mp2;
+        for(auto i: s1) {
+            mp1[i]++;
+        }
 
-        if(s2.size() < s1.size()) {
+        if(s1.size() > s2.size()) {
             return false;
         }
 
-        for(auto i: s1) {
-            mp1[i - 'a']++;
+        int n = s1.size();
+
+        for(int i=0; i<n; i++) {
+            mp2[s2[i]]++;
         }
 
-        for(int i=0; i<s1.size()-1; i++) {
-            mp2[s2[i] - 'a']++;
-        };
+        if(mp1 == mp2) {
+            return true;
+        }
 
-        for(int i=s1.size()-1; i<s2.size(); i++) {
-            mp2[s2[i] - 'a']++;
+        for(int i=n; i<s2.size(); i++) {
+            char curr = s2[i];
+
+            mp2[s2[i - n]]--;
+            
+            if(mp2.find(s2[i - n]) != mp2.end() and mp2[s2[i - n]] == 0) {
+                mp2.erase(s2[i - n]);
+            }
+
+            mp2[curr]++;
 
             if(mp1 == mp2) {
                 return true;
-            } else {
-                mp2[s2[i - s1.size() + 1] - 'a']--;
             }
         }
 
