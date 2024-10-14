@@ -1,18 +1,21 @@
 class Solution {
 public:
     long long maxKelements(vector<int>& nums, int k) {
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
-        cout.tie(NULL);
         long long ans = 0ll;
 
-        priority_queue<int> pq(nums.begin(),nums.end());
+        priority_queue<int> pq;
+
+        for(auto i: nums) {
+            pq.push(i);
+        }
 
         while(k--) {
-            auto t = pq.top();
+            ans += pq.top();
+            int curr = pq.top();
+
             pq.pop();
-            pq.push(ceil((double)t/3.0));
-            ans += t;
+
+            pq.push(ceil((double)curr / 3.0));
         }
 
         return ans;
