@@ -48,8 +48,7 @@ class DSU {
             parent[ulp_v] = ulp_u;
         }
 
-        totalAnd[ulp_u] = totalAnd[ulp_u] & totalAnd[ulp_v] & w;
-        totalAnd[ulp_v] = totalAnd[ulp_u] & totalAnd[ulp_v] & w;
+        totalAnd[ulp_u] = totalAnd[ulp_v] = totalAnd[ulp_u] & totalAnd[ulp_v] & w;
 
         if(rank[ulp_u] == rank[ulp_v]) {
             rank[ulp_u]++;
