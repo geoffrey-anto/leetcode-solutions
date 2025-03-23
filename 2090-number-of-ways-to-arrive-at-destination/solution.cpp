@@ -22,7 +22,7 @@ public:
             greater<pair<long long, long long>>
         > pq;
 
-        vector<long long> dis(n, LONG_LONG_MAX);
+        vector<long long> dis(n, LLONG_MAX);
 
         vector<long long> ways(n, 0);
 
